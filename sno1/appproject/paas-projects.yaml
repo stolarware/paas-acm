@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: paas-projects
+  namespace: paas-gitops
+spec:
+  destinations:
+  - namespace: paas-gitops
+    server: https://kubernetes.default.svc  
+  - name: c03x-bec-dk
+    namespace: paas-gitops
+    server: https://api.c03x.paas.ocp.bec.dk:6443
+  - name: c04x-bec-dk
+    namespace: paas-gitops
+    server: https://api.c04x.paas.ocp.bec.dk:6443
+  sourceRepos:
+  - https://bitbucket.intra.bec.dk/scm/odp/becproject-chart.git
