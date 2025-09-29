@@ -1,1 +1,29 @@
-
+apiVersion: apps.open-cluster-management.io/v1beta1
+kind: GitOpsCluster
+metadata:
+  name: acm
+  namespace: paas-gitops
+spec:
+  argoServer:
+    argoNamespace: paas-gitops
+  placementRef:
+    name: acm-placement
+    kind: Placement
+    apiVersion: cluster.open-cluster-management.io/v1beta1
+---
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSetBinding
+metadata:
+  name: sandbox
+  namespace: paas-gitops
+spec:
+  clusterSet: sandbox
+---
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: acm-placement
+  namespace: paas-gitops
+spec:
+  clusterSets:
+    - sandbox
