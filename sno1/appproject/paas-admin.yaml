@@ -14,4 +14,5 @@ spec:
     namespace: paas-gitops
     server: https://api.sno3.paas.ocp.stolarek.org.pl:6443
   sourceRepos:
+  - https://bitbucket.stolarek.org.pl/scm/odp/becproject-chart.git
   - https://github.com/stolarware/paas-acm.git
