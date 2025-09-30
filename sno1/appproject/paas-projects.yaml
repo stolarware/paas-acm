@@ -7,11 +7,11 @@ spec:
   destinations:
   - namespace: paas-gitops
     server: https://kubernetes.default.svc  
-  - name: c03x-bec-dk
+  - name: sno2
     namespace: paas-gitops
-    server: https://api.c03x.paas.ocp.bec.dk:6443
-  - name: c04x-bec-dk
+    server: https://api.sno2.paas.ocp.stolarek.org.pl:6443
+  - name: sno3
     namespace: paas-gitops
-    server: https://api.c04x.paas.ocp.bec.dk:6443
+    server: https://api.sno3.paas.ocp.stolarek.org.pl:6443
   sourceRepos:
-  - https://bitbucket.intra.bec.dk/scm/odp/becproject-chart.git
+  - https://bitbucket.stolarek.org.pl/scm/odp/becproject-chart.git
