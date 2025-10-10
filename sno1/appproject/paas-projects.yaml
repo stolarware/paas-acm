@@ -11,4 +11,4 @@ spec:
     namespace: openshift-gitops
     server: https://api.sno2.paas.ocp.stolarek.org.pl:6443
   sourceRepos:
-  - https://bitbucket.stolarek.org.pl/scm/odp/newproject-chart.git
+  - https://github.com/stolarware/newproject-chart.git
