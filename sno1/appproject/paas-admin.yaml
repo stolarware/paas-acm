@@ -6,12 +6,9 @@ metadata:
 spec:
   destinations:
   - namespace: openshift-gitops
-    server: https://kubernetes.default.svc   
-  - name: sno2
+    server: https://kubernetes.default.svc 
+  - namespace: openshift-gitops
+    server: https://kubernetes.default.svc  
+  - name: sno2-stolarware
     namespace: openshift-gitops
-    server: https://api.sno2.paas.ocp.stolarek.org.pl:6443
-  - name: sno3
-    namespace: openshift-gitops
-    server: https://api.sno3.paas.ocp.stolarek.org.pl:6443
-  sourceRepos:
-  - https://github.com/stolarware/paas-acm.git
+    server: https://api.sno2.stolarek.org.pl:6443
