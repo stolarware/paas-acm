@@ -14,16 +14,16 @@ spec:
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
-  name: sandbox
+  name: stolarware
   namespace: paas-gitops
 spec:
-  clusterSet: sandbox
+  clusterSet: stolarware
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: acm-placement
-  namespace: paas-gitops
+  namespace: openshift-gitops
 spec:
   clusterSets:
-    - sandbox
+    - stolarware
