@@ -15,7 +15,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
   name: stolarware
-  namespace: paas-gitops
+  namespace: openshift-gitops
 spec:
   clusterSet: stolarware
 ---
