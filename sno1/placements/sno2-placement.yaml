@@ -13,4 +13,4 @@ spec:
         - key: name
           operator: In
           values:
-          - c02t-bec-dk
+          - sno2-stolarware
