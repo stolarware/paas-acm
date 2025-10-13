@@ -2,10 +2,10 @@ apiVersion: apps.open-cluster-management.io/v1beta1
 kind: GitOpsCluster
 metadata:
   name: acm
-  namespace: paas-gitops
+  namespace: openshift-gitops
 spec:
   argoServer:
-    argoNamespace: paas-gitops
+    argoNamespace: openshift-gitops
   placementRef:
     name: acm-placement
     kind: Placement
