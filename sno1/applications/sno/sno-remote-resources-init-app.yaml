@@ -12,7 +12,7 @@ spec:
     path: sno1/applications/sno/remote-resources
     repoURL: https://github.com/stolarware/paas-acm.git
     targetRevision: master
-  project: openshift-admin
+  project: paas-admin
   syncPolicy:
     automated:
       selfHeal: true
