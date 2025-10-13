@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sno-paas-tools-init-app
+  namespace: openshift-gitops
+spec:
+  destination:
+    name: ''
+    namespace: openshift-gitops
+    server: https://kubernetes.default.svc
+  source:
+    path: sno1/applications/sno/paas-tools
+    repoURL: https://github.com/stolarware/paas-acm.git
+    targetRevision: master
+  project: paas-admin
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false
+      - FailOnSharedResource=true
