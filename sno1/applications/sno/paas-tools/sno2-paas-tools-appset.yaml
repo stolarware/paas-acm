@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: sno2-paas-tools
+  namespace: openshift-gitops
+spec:
+  generators:
+  - clusterDecisionResource:
+      configMapRef: acm-placement
+      labelSelector:
+        matchLabels:
+          cluster.open-cluster-management.io/placement: sno2-placement
+      requeueAfterSeconds: 300
+  template:
+    metadata:
+      annotations:
+        apps.open-cluster-management.io/ocm-managed-cluster: '{{name}}'
+        apps.open-cluster-management.io/ocm-managed-cluster-app-namespace: openshift-gitops
+        argocd.argoproj.io/skip-reconcile: "true"
+      labels:
+        apps.open-cluster-management.io/pull-to-ocm-managed-cluster: "true"
+        velero.io/exclude-from-backup: "true"
+      name: sno2-paas-tools
+    spec:
+      destination:
+        namespace: openshift-gitops
+        server: '{{server}}'
+      project: paas-admin
+      sources:
+      - path: appofapps
+        repoURL: https://github.com/stolarware/scm/paas-tools/paas-argocd-appofapps.git
+        targetRevision: master
+        helm:
+          valueFiles:
+            - values/sno/sno-values.yaml
+            - values/sno/sno2-values.yaml
+          ignoreMissingValueFiles: true
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+          - PruneLast=true
+          - FailOnSharedResource=true
