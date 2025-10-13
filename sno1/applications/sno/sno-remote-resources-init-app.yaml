@@ -10,7 +10,7 @@ spec:
     server: https://kubernetes.default.svc
   source:
     path: sno1/applications/sno/remote-resources
-    repoURL: https://github.com/stolarware/gdzieś/paas-acm.git
+    repoURL: https://github.com/stolarware/paas-acm.git
     targetRevision: master
   project: openshift-admin
   syncPolicy:
