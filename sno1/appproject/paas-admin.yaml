@@ -12,3 +12,5 @@ spec:
   - name: sno2-stolarware
     namespace: openshift-gitops
     server: https://api.sno2.stolarek.org.pl:6443
+  sourceRepos:
+  - https://github.com/stolarware/paas-acm.git
