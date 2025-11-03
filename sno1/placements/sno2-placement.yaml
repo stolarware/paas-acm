@@ -13,4 +13,4 @@ spec:
         - key: name
           operator: In
           values:
-          - sno2-stolarware
+          - sno2
