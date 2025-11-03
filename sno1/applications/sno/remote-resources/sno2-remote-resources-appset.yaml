@@ -29,7 +29,7 @@ spec:
       source:
         path: remote-resources
         repoURL: https://github.com/stolarware/paas-acm.git
-        targetRevision: master
+        targetRevision: main
         helm:
           valueFiles:
             - values/sno/sno-values.yaml
