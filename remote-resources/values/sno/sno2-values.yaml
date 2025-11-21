@@ -1,0 +1,378 @@
+namespaces:
+  labels:
+    stolarprojectid: D0216_05
+    stolarid: "4853"
+  list:
+    paas-tools: {}
+    paas-pipelines: {}
+    paas-shared-secrets: {}
+    openshift-pipelines-operator: {}
+    keystore-operator: {}
+    becproject-operator: {}
+    sealed-secrets: {}
+    orchestrator: {}
+    ibm-license-service: {}
+appproject:
+  paas_tools:
+    destinations:
+      - namespace: paas-gitops
+        server: https://kubernetes.default.svc
+      - namespace: openshift-gitops
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: paas-tools
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: paas-shared-secrets
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: paas-pipelines
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: openshift-pipelines-operator
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: openshift-operators
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: openshift-pipelines
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: openshift-adp
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: keystore-operator
+        server: https://kubernetes.default.svc
+      - name: in-cluster
+        namespace: becproject-operator
+        server: https://kubernetes.default.svc    
+      - namespace: openshift-marketplace
+        server: https://kubernetes.default.svc
+      - namespace: orchestrator
+        server: https://kubernetes.default.svc
+      - namespace: cert-manager-operator
+        server: https://kubernetes.default.svc
+      - namespace: ibm-apiconnect-operator
+        server: https://kubernetes.default.svc
+      - namespace: ibm-eem-operator
+        server: https://kubernetes.default.svc
+      - namespace: ibm-common-services
+        server: https://kubernetes.default.svc
+      - namespace: sealed-secrets
+        server: https://kubernetes.default.svc
+      - namespace: ibm-license-service
+        server: https://kubernetes.default.svc
+      - namespace: api-coe-t1
+        server: https://kubernetes.default.svc
+rolebindings:
+  namespaces:
+    openshift-operators:
+      API_COE_UDV_VIEW_view:
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: view
+        subjects:
+          - apiGroup: rbac.authorization.k8s.io
+            kind: Group
+            name: API_COE_UDV_VIEW 
+    ibm-license-service:
+      API_COE_UDV_ADM_admin:
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: admin
+        subjects:
+          - apiGroup: rbac.authorization.k8s.io
+            kind: Group
+            name: API_COE_UDV_ADM 
+clusterroles:
+  list:
+    secretslist:
+      rules:
+        - apiGroups:
+            - ""
+          resources:
+            - secrets
+          verbs:
+            - list
+    crd-access:
+      labels:
+        app.kubernetes.io/part-of: paas-acm
+      annotations:
+        app.kubernetes.io/created-by: paas-acm
+      rules:
+        - apiGroups: ["apiextensions.k8s.io"]
+          resources: ["customresourcedefinitions"]
+          verbs: ["get", "list", "watch", "view"]
+    customer-egressfirewall-edit:
+      labels:
+        rbac.authorization.k8s.io/aggregate-to-admin: "true"
+        app.kubernetes.io/part-of: paas-acm
+      annotations:
+        app.kubernetes.io/created-by: paas-acm
+      rules:
+        - apiGroups: ["k8s.ovn.org"]
+          resources: ["egressfirewalls"]
+          verbs: ["get", "list", "watch", "view","update","patch"]
+    api-monitoring-prometheus-server:
+      labels:
+        app.kubernetes.io/part-of: paas-acm
+      annotations:
+        app.kubernetes.io/created-by: paas-acm
+      rules:
+      - apiGroups:
+        - ""
+        resources:
+        - nodes
+        - nodes/proxy
+        - nodes/metrics
+        - services
+        - endpoints
+        - pods
+        - ingresses
+        - configmaps
+        verbs:
+        - get
+        - list
+        - watch
+      - apiGroups:
+        - extensions
+        resources:
+        - ingresses/status
+        - ingresses
+        verbs:
+        - get
+        - list
+        - watch
+      - nonResourceURLs:
+        - /metrics
+        verbs:
+        - get
+    confluent-operator:
+      labels:
+        app.kubernetes.io/part-of: paas-acm
+        rbac.authorization.k8s.io/aggregate-to-admin: "true"
+      annotations:
+        app.kubernetes.io/created-by: paas-acm
+      rules:
+      - apiGroups:
+        - cluster.confluent.com
+        resources:
+        - zookeeperclusters
+        - zookeeperclusters/status
+        - zookeeperclusters/scale
+        - zookeeperclusters/finalizers
+        - kafkaclusters
+        - kafkaclusters/status
+        - kafkaclusters/scale
+        - kafkaclusters/finalizers
+        verbs:
+        - '*'
+      - apiGroups:
+        - operator.confluent.cloud
+        resources:
+        - physicalstatefulclusters
+        - physicalstatefulclusters/scale
+        - physicalstatefulclusters/status
+        - physicalstatefulclusters/finalizers
+        verbs:
+        - '*'
+      - apiGroups:
+        - platform.confluent.io
+        resources:
+        - '*'
+        verbs:
+        - '*'
+      - apiGroups:
+        - policy
+        resources:
+        - poddisruptionbudgets
+        verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      - apiGroups:
+        - route.openshift.io
+        resources:
+        - routes
+        - routes/custom-host
+        verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      - apiGroups:
+        - apps
+        resources:
+        - statefulsets
+        - statefulsets/scale
+        - statefulsets/status
+        verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      - apiGroups:
+        - apps
+        resources:
+        - deployments
+        verbs:
+        - get
+      - apiGroups:
+        - ""
+        resources:
+        - configmaps
+        - events
+        - persistentvolumeclaims
+        - persistentvolumes
+        - secrets
+        - secrets/finalizers
+        - pods
+        - pods/exec
+        - services
+        verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      - apiGroups:
+        - networking.k8s.io
+        resources:
+        - ingresses
+        - ingresses/status
+        verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      - apiGroups:
+        - ""
+        resources:
+        - namespaces
+        verbs:
+        - get  
+    
+clusterrolebindings:
+  list:
+    api-team-crd-access:
+      labels:
+        app.kubernetes.io/part-of: paas-acm
+      annotations:
+        app.kubernetes.io/created-by: paas-acm
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: crd-access
+      subjects:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: API_COE_UDV_VIEW
+    api-team-cluster-reader:
+      labels:
+        app.kubernetes.io/part-of: paas-acm
+      annotations:
+        app.kubernetes.io/created-by: paas-acm
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-reader
+      subjects:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: API_COE_OPS_VIEW
+    api-team-prometheus-server:
+      labels:
+        app.kubernetes.io/part-of: paas-acm
+      annotations: 
+        app.kubernetes.io/created-by: paas-acm
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: api-monitoring-prometheus-server
+      subjects:
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: system:serviceaccounts:api-shared-jenkins-d1
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: system:serviceaccounts:api-shared-jenkins-t1
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: system:serviceaccounts:becproject-operator 
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: API_COE_UDV_RES
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: API_COE_UDV_ADM
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: API_COE_OPS_CONFIG
+        - apiGroup: rbac.authorization.k8s.io
+          kind: Group
+          name: API_COE_OPS_DEPLOY
+installCrds:
+  esp:
+    enabled: true
+
+securityContextConstraints:
+  anyuid:
+    groups:
+    - system:cluster-admins
+    - system:serviceaccounts:api-dev01-gateway-web-d1
+    - system:serviceaccounts:api-dev01-gateway-bank-d1
+    - system:serviceaccounts:api-dev02-gateway-web-d1
+    - system:serviceaccounts:api-dev02-gateway-bank-d1
+
+    - system:serviceaccounts:api-test01-gateway-web-t1
+    - system:serviceaccounts:api-test01-gateway-bank-t1
+    - system:serviceaccounts:api-test02-gateway-web-t1
+    - system:serviceaccounts:api-test02-gateway-bank-t1
+  nonroot:
+    groups:
+    - system:serviceaccounts:api-dev01-portal-d1
+    - system:serviceaccounts:api-dev01-manager-d1
+    - system:serviceaccounts:api-dev01-analytics-d1
+    - system:serviceaccounts:api-dev02-portal-d1
+    - system:serviceaccounts:api-dev02-manager-d1
+    - system:serviceaccounts:api-dev02-analytics-d1
+    - system:serviceaccounts:api-test01-portal-t1
+    - system:serviceaccounts:api-test01-manager-t1
+    - system:serviceaccounts:api-test01-analytics-t1
+    - system:serviceaccounts:api-test02-portal-t1
+    - system:serviceaccounts:api-test02-manager-t1
+    - system:serviceaccounts:api-test02-analytics-t1
+
+priorityclass:
+  red-priority-class:
+    value: 30000
+    preemptionPolicy: PreemptLowerPriority
+    globalDefault: false
+    description: "This priority class must only be used for Stolarware red system pods only."
+  orange-priority-class:
+    value: 20000
+    preemptionPolicy: PreemptLowerPriority
+    globalDefault: false
+    description: "This priority class are intended to be used for Stolarware orange system pods."
+  yellow-priority-class:
+    value: 10000
+    preemptionPolicy: PreemptLowerPriority
+    globalDefault: false
+    description: "This priority class are intended to be used for Stolarware yellow system pods."
