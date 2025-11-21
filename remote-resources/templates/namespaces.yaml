@@ -1,0 +1,19 @@
+{{- $globalLabels := .Values.namespaces.labels }}
+{{- range $name, $conf := .Values.namespaces.list }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    {{- if $globalLabels }}
+      {{- range $k, $v := $globalLabels }}
+    {{ $k }}: {{ $v | quote }}
+      {{- end }}
+    {{- end }}
+    {{- if $conf.labels }}
+      {{- range $k, $v := $conf.labels }}
+    {{ $k }}: {{ $v | quote }}
+      {{- end }}
+    {{- end }}
+  name: {{ $name }}
+---
+{{- end }}
